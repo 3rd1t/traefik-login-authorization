@@ -119,6 +119,8 @@ http:
 
 Docker Labels Example
 ---
+
+```
 labels:
   - "traefik.http.routers.my-router.rule=Host(`example.com`)"
   - "traefik.http.routers.my-router.entrypoints=web"
@@ -133,4 +135,4 @@ labels:
   - "traefik.http.middlewares.my-plugin-middleware.plugin.login-authorization.passwordPropertyName=password"
   - "traefik.http.middlewares.my-plugin-middleware.plugin.login-authorization.loginMethodType=Json"
   - "traefik.http.middlewares.my-plugin-middleware.plugin.login-authorization.authFlowType=LoginFlow"
-
+```
