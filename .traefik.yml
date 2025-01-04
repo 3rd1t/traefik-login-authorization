@@ -1,0 +1,16 @@
+displayName: Login Authorization
+type: middleware
+iconPath: .assets/icon.png
+
+import: github.com/3rd1t/traefik_login_authorization
+summary: 'This plugin intercepts incoming requests, validates user credentials against an external authentication server, generates JWT tokens upon successful authentication, and protects downstream services by verifying JWT tokens on subsequent requests.'
+
+testData:
+  authServer: "https://dummyjson.com/auth/login"
+  secretKey: "my-super-secret-key"
+  tokenExpiration: 3600
+  authSuccessIndicator: "\"accessToken\""
+  usernamePropertyName: "username"
+  passwordPropertyName: "password"
+  loginMethodType: "Json"
+  authFlowType: "LoginFlow"
