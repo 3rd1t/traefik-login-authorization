@@ -109,7 +109,7 @@ http:
         login-authorization:
           authServer: "https://dummyjson.com/auth/login"
           secretKey: "my-super-secret-key"
-          tokenExpiration: 2592000
+          tokenExpiration: 3600
           authSuccessIndicator: "\"accessToken\""
           usernamePropertyName: "username"
           passwordPropertyName: "password"
@@ -120,19 +120,26 @@ http:
 Docker Labels Example
 ---
 
-```
-labels:
-  - "traefik.http.routers.my-router.rule=Host(`example.com`)"
-  - "traefik.http.routers.my-router.entrypoints=web"
-  - "traefik.http.routers.my-router.middlewares=my-plugin-middleware"
-  - "traefik.http.services.my-service.loadbalancer.server.port=8080"
-
-  - "traefik.http.middlewares.my-plugin-middleware.plugin.login-authorization.authServer=https://dummyjson.com/auth/login"
-  - "traefik.http.middlewares.my-plugin-middleware.plugin.login-authorization.secretKey=my-super-secret-key"
-  - "traefik.http.middlewares.my-plugin-middleware.plugin.login-authorization.tokenExpiration=3600"
-  - "traefik.http.middlewares.my-plugin-middleware.plugin.login-authorization.authSuccessIndicator=\"accessToken\""
-  - "traefik.http.middlewares.my-plugin-middleware.plugin.login-authorization.usernamePropertyName=username"
-  - "traefik.http.middlewares.my-plugin-middleware.plugin.login-authorization.passwordPropertyName=password"
-  - "traefik.http.middlewares.my-plugin-middleware.plugin.login-authorization.loginMethodType=Json"
-  - "traefik.http.middlewares.my-plugin-middleware.plugin.login-authorization.authFlowType=LoginFlow"
+```yml
+# docker-compose.yml
+services:
+#...
+  whoami:
+    image: traefik/whoami
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.my-router.rule=Host(`example.com`)
+      - traefik.http.routers.my-router.entrypoints=web
+      - traefik.http.routers.my-router.middlewares=my-plugin-middleware
+      - traefik.http.routers.my-router.service=my-service
+      - traefik.http.services.my-service.loadbalancer.server.port=8080
+    
+      - traefik.http.middlewares.my-plugin-middleware.plugin.login-authorization.authServer=https://dummyjson.com/auth/login
+      - traefik.http.middlewares.my-plugin-middleware.plugin.login-authorization.secretKey=my-super-secret-key
+      - traefik.http.middlewares.my-plugin-middleware.plugin.login-authorization.tokenExpiration=3600
+      - traefik.http.middlewares.my-plugin-middleware.plugin.login-authorization.authSuccessIndicator=accessToken
+      - traefik.http.middlewares.my-plugin-middleware.plugin.login-authorization.usernamePropertyName=username
+      - traefik.http.middlewares.my-plugin-middleware.plugin.login-authorization.passwordPropertyName=password
+      - traefik.http.middlewares.my-plugin-middleware.plugin.login-authorization.loginMethodType=Json
+      - traefik.http.middlewares.my-plugin-middleware.plugin.login-authorization.authFlowType=LoginFlow
 ```
